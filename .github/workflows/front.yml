@@ -63,7 +63,7 @@ jobs:
     # Deploy sample image to the GKE cluster
     - name: Deploy
       run: |-
-        (cd webscrapper-front && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
-        kubectl apply -k ./webscrapper-front/
+        (cd front && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
+        kubectl apply -k ./front/
         kubectl get services -o wide
 
