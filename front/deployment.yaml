@@ -1,0 +1,46 @@
+---
+apiVersion: "v1"
+kind: "Namespace"
+metadata:
+  name: "scraper"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "scraper-front"
+  namespace: "scraper"
+  labels:
+    app: "scraper-front"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "scraper-front"
+  template:
+    metadata:
+      labels:
+        app: "scraper-front"
+    spec:
+      containers:
+      - name: "scraper-front-sha256-1"
+        image: "europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-front@sha256:711bf7e7ef2669c96513f2c20d2972094085289bd6723c4ae9bb27f9aa25becc"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "scraper-front-hpa-jqaj"
+  namespace: "scraper"
+  labels:
+    app: "scraper-front"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "scraper-front"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
