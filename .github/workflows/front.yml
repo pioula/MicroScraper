@@ -49,7 +49,7 @@ jobs:
       run: |-
         docker build \
           --tag "$NEW_IMAGE" \
-          ./webscrapper-front/
+          ./front/
 
     - name: Giving access to zone
       run: |-
