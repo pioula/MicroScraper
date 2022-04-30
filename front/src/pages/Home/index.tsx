@@ -1,14 +1,17 @@
+import { useState } from 'react';
 import { useEffect } from 'react';
+
 import Table from 'react-bootstrap/Table';
-import useScrapData from '../../../hooks/useScrapData';
+
+import useScrapData from '~/hooks/useScrapData';
 
 function Home() {
     const scrapData = useScrapData();
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        console.log('siema');
-        scrapData().then((data) => console.log(data));
-    });
+         scrapData().then((scrappedData) => setData(scrappedData));
+    }, []);
 
     return (
         <Table striped bordered hover>
