@@ -1,48 +1,37 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import Table from 'react-bootstrap/Table';
+import parse from "html-react-parser";
 
 import useScrapData from '~/hooks/useScrapData';
 
+type post_t = {
+    author: string,
+    created: string,
+    downs: number,
+    selftext_html: string,
+    subreddit: string,
+    title: string,
+    ups: number,
+    url: string,
+}
+
 function Home() {
     const scrapData = useScrapData();
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<Array<post_t>>([]);
 
     useEffect(() => {
-         scrapData().then((scrappedData) => setData(scrappedData));
+         scrapData().then((scrappedData) => setData(scrappedData) );
     }, []);
 
     return (
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                </tr>
-                <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                </tr>
-                <tr>
-                <td>3</td>
-                <td colSpan={2}>Larry the Bird</td>
-                <td>@twitter</td>
-                </tr>
-            </tbody>
-        </Table>
+        <>
+            { data.length === 0 ? <div>loading...</div> :
+                <div>
+                    { parse(data[0].selftext_html) }
+                </div>
+            }
+        </>
     );
 }
 
