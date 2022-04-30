@@ -1,6 +1,10 @@
 import praw
 import data_sender as comm
 from datetime import datetime
+from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.triggers.interval import IntervalTrigger
+
+INTERVAL = 1
 
 
 interesting_post_parameters = (
@@ -79,8 +83,8 @@ def get_post_param(post, parameter):
     raise NotImplementedError('Unknown parameter: ' + parameter + ' encountered!')
 
 
-def get_top_posts(reddit_instance):
-    top_posts = reddit.subreddit('MachineLearning').top(limit=100)
+def get_new_posts(reddit_instance):
+    top_posts = reddit.subreddit('MachineLearning').new(limit=100)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
@@ -92,17 +96,24 @@ def get_top_posts(reddit_instance):
 
         for param in interesting_post_parameters:
             post_dict[param] = get_post_param(post, param)
-            print("Param " + param + " parsed")
 
         data_dict[counter] = post_dict
         counter += 1
 
     print(data_dict)
+    return data_dict
+
+
+scheduler = BlockingScheduler()
+
+
+@scheduler.scheduled_job(IntervalTrigger(hours=INTERVAL))
+def scrap_data():
+    data_dict = get_new_posts(reddit)
     comm.send_data(data_dict)
 
 
 if __name__ == '__main__':
     reddit = init_reddit_instance()
     print("Instance created")
-    get_top_posts(reddit)
-    # comm.send_rabbit()
+    scheduler.start()
