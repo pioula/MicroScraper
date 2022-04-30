@@ -4,7 +4,7 @@ import dataRouter from "./routers/data.router.mjs";
 const app = express();
 const port = process.env.PORT ? process.env.PORT : 80;
 
-app.use(express.static('public'));
+app.use(express.json());
 
 app.use('/data', dataRouter);
 

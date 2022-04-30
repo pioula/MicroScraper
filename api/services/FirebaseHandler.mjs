@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { child, get, getDatabase, ref } from "firebase/database";
+import { child, get, getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB30lBZ6THtnBRfpP5Tx0NDS0AazliLFG8",
@@ -18,12 +18,12 @@ class FirebaseHandler {
         this.database = getDatabase(this.app);
     }
 
-    putData(data) {
+    async putData(data) {
+        await set(ref(this.database, 'data/'), data);
     }
 
     async getData() {
-        const dbRef = ref(this.database);
-        return await get(child(dbRef, `data`))
+        return await get(child(ref(this.database), `data`))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     console.log(snapshot.val())

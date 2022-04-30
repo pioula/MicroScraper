@@ -7,9 +7,9 @@ const dataController = {
         handler.getData()
             .then((data) => res.status(200).send(data));
     },
-    put: (req, res) => { 
-        handler.putData();
-        res.status(200);
+    put: (req, res) => {
+        handler.putData(req.body)
+            .then(() => res.status(200).send("OK"));
     }
 }
 
