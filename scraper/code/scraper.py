@@ -1,7 +1,6 @@
 import praw
 import data_sender as comm
 from datetime import datetime
-import pprint
 
 
 interesting_post_parameters = (
