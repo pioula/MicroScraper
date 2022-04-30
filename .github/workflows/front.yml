@@ -43,7 +43,7 @@ jobs:
       uses: google-github-actions/get-gke-credentials@v0.4.0
       with:
         cluster_name: scraper-cluster
-        location: europe-central2-a
+        location: europe-central2
     
     # # Get the GKE credentials so we can deploy to the cluster
     # - name: Get gcloud credentials
