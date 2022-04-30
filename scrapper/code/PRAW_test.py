@@ -13,8 +13,8 @@ def initRedditInstance():
 def getHotPosts(reddit):
     hot_posts = reddit.subreddit('MachineLearning').rising(limit=10)
     for post in hot_posts:
-        print(str(post.score) + " " + post.title)
-        pprint.pprint(vars(post))
+        print(str(post.score) + " " + post.title + " name: " + post.author.name)
+        #pprint.pprint(vars(post))
         print("\n\n")
 
 
