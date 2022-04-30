@@ -12,7 +12,7 @@ env:
   GKE_CLUSTER: scraper-cluster
   GKE_ZONE: europe-central2
   DEPLOYMENT_NAME: scraper-front
-  NEW_IMAGE: europe-central2-docker.pkg.dev/scraper-348820/scraper-repo/scraper-front:${{github.run_number}}
+  NEW_IMAGE: europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-front:${{github.run_number}}
 
 jobs:
   setup-and-deploy:
