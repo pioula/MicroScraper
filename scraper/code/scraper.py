@@ -98,10 +98,11 @@ def get_top_posts(reddit_instance):
         counter += 1
 
     print(data_dict)
-    comm.send_to_localhost(data_dict)
+    comm.send_data(data_dict)
 
 
 if __name__ == '__main__':
     reddit = init_reddit_instance()
     print("Instance created")
     get_top_posts(reddit)
+    # comm.send_rabbit()
