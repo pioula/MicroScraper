@@ -1,4 +1,3 @@
-import json
 import requests
 import sys
 
@@ -10,9 +9,7 @@ class InvalidResponse(Exception):
 
 # Sends data passed as a dictionary to a given address.
 def send_data(address, data_dict):
-    data_json = json.dumps(data_dict)
-    response = requests.post(address, data_json)
-
+    response = requests.put(address, json=data_dict)
     sys.stdout.write("Received response: " + str(response))
 
     if response.status_code != 200:
@@ -22,7 +19,7 @@ def send_data(address, data_dict):
 
 def send_to_localhost(data_dict):
     try:
-        send_data('http://localhost:8080/data', data_dict)
+        send_data('http://localhost:80/data', data_dict)
     except InvalidResponse:
         sys.stderr.write('Unable to send data to local!')
         return False

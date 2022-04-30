@@ -1,6 +1,7 @@
 import praw
 import data_sender as comm
 from datetime import datetime
+import pprint
 
 
 interesting_post_parameters = (
@@ -24,7 +25,7 @@ def get_author(post):
 
 
 def get_subreddit(post):
-    return post.subreddit.name
+    return post.subreddit.display_name
 
 
 def get_date(post):
@@ -52,7 +53,7 @@ def get_url(post):
 
 
 def get_selftext_html(post):
-    return post.seftext_html
+    return post.selftext_html
 
 
 def get_post_param(post, parameter):
@@ -68,18 +69,40 @@ def get_post_param(post, parameter):
 
     if parameter == 'title':
         return get_title(post)
+    if parameter == 'downs':
+        return get_downs(post)
+    if parameter == 'ups':
+        return get_ups(post)
+    if parameter == 'url':
+        return get_url(post)
+    if parameter == "selftext_html":
+        return get_selftext_html(post)
+    raise NotImplementedError('Unknown parameter: ' + parameter + ' encountered!')
 
 
 def get_top_posts(reddit_instance):
-    top_posts = reddit.subreddit('MachineLearning').top(limit=1)
+    top_posts = reddit.subreddit('MachineLearning').top(limit=100)
+    print("Posts fetched")
     data_dict = dict()
+    counter = 0
 
     for post in top_posts:
-        for param in interesting_post_parameters:
-            data_dict[param] = get_post_param(post, param)
+        if post.selftext_html is None:
+            continue
+        post_dict = dict()
 
+        for param in interesting_post_parameters:
+            post_dict[param] = get_post_param(post, param)
+            print("Param " + param + " parsed")
+
+        data_dict[counter] = post_dict
+        counter += 1
+
+    print(data_dict)
     comm.send_to_localhost(data_dict)
 
 
 if __name__ == '__main__':
     reddit = init_reddit_instance()
+    print("Instance created")
+    get_top_posts(reddit)
