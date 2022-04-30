@@ -6,6 +6,6 @@ const dataRouter = Router();
 
 dataRouter.get('/', dataController.get);
 
-dataRouter.post('/', dataController.post);
+dataRouter.put('/', dataController.put);
 
 export default dataRouter;
