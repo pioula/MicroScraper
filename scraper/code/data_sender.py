@@ -3,11 +3,6 @@ import pika
 import json
 
 
-class InvalidResponse(Exception):
-    def __init__(self, message):
-        self.message = message
-
-
 # Sends data passed as a dictionary to a given address.
 def send_data(data_dict):
     connection = pika.BlockingConnection(
@@ -21,4 +16,3 @@ def send_data(data_dict):
 
     sys.stdout.write('Reddit data sent.')
 
-    return True
