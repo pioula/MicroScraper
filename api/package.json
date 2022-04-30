@@ -1,0 +1,22 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Api for connecting with scrapper and database",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "nodemon index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pioula/MicroScrapper.git"
+  },
+  "author": "pioula, MarcinMordecki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pioula/MicroScrapper/issues"
+  },
+  "homepage": "https://github.com/pioula/MicroScrapper#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
