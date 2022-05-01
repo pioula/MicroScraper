@@ -1,6 +1,6 @@
 function useScrapData() {
     function scrapData() {
-        return fetch('http://scraper-api-service.scraper/data', {
+        return fetch('http://34.107.209.5/data', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
