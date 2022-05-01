@@ -5,8 +5,14 @@ import json
 
 # Sends data passed as a dictionary to a given address.
 def send_data(data_dict):
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
+    try:
+        connection = pika.BlockingConnection(
+            # TODO: stop using hardcoded, turn to DNS
+            pika.ConnectionParameters(host='10.8.15.120'))
+    except pika.exceptions.AMQPConnectionError:
+        sys.stderr.write('Unable to connect to RabbitMQ')
+        sys.exit(1)
+
     channel = connection.channel()
 
     channel.queue_declare(queue='reddit_data_queue')
