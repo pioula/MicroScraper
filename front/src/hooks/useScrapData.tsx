@@ -1,6 +1,6 @@
 function useScrapData() {
     function scrapData() {
-        return fetch('http://localhost:80/data', {
+        return fetch('http://34.118.125.207:80/data', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
