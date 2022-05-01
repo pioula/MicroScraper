@@ -44,7 +44,7 @@ def get_permalink(post):
 
 
 interesting_post_parameters = (
-    'author', 'title', 'downs', 'ups', 'subreddit', 'permalink', 'created', 'selftext_html'
+    'author', 'title', 'ups', 'subreddit', 'permalink', 'created', 'selftext_html'
 )
 
 
@@ -64,11 +64,34 @@ def get_post_param(post, parameter):
     return getattr(post, parameter)
 
 
-def get_single_image(post):
+def get_images(post):
     try:
-        return post.preview['images'][0]['source']['url']
-    except AttributeError:
+        result = []
+        images = post.preview['images']
+        for image in images:
+            # Checking is the post contains anything more than a regular image.
+            # variants[0] holds an arbitrarily chosen type that can handle the file, e.g. gif.
+            if 'variants' in image.keys() and image['variants']:
+                variants_of_image = image['variants']
+                variants = list(variants_of_image.keys())
+                result.append({variants[0]: variants_of_image[variants[0]]['source']['url']})
+            else:
+                result.append({'image': image['source']['url']})
+        return result
+    except AttributeError as e:
+        print(e)
+        pprint.pprint(vars(post), sys.stderr)
         return None
+
+
+def get_media(post):
+    if not hasattr(post, 'preview') or not post.preview:
+        return None
+
+    if 'reddit_video_preview' not in post.preview:
+        return get_images(post)
+
+    return post.preview['reddit_video_preview']['fallback_url']
 
 
 def get_multi_image(post):
@@ -87,14 +110,14 @@ def get_multi_image(post):
 
 
 def get_new_posts():
-    top_posts = reddit.subreddit('MachineLearning').new(limit=200)
+    top_posts = reddit.subreddit('all').new(limit=200)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
 
     for post in top_posts:
         # Determine what are possible post fields. Debug only.
-        # pprint.pprint(vars(post))
+        # pprint.pprint(vars(post), sys.stderr)
 
         # if post.selftext_html is None:
         #    continue
@@ -104,15 +127,19 @@ def get_new_posts():
         for param in interesting_post_parameters:
             post_dict[param] = get_post_param(post, param)
 
-        post_dict['single_image'] = get_single_image(post)
-        if post.selftext_html is None and post_dict['single_image'] is None:
-            sys.stderr.write("Unknown post format!\n")
+        if post.selftext_html is None:
+            post_dict['media'] = get_media(post)
+        if post.selftext_html is None and post_dict['media'] is None:
+            if hasattr(post, 'media_metadata') and post.media_metadata:
+                post_dict['media_gallery'] = get_multi_image(post)
+            else:
+                post_dict['misc'] = post.url
             continue
             # Experimental code below
             # try:
             #    post_dict['multi_image'] = get_multi_image(post)
             # except:
-            #    pprint.pprint(vars(post))
+            #    pprint.pprint(vars(post), sys.stderr)
             #    raise
 
         #except AttributeError:
