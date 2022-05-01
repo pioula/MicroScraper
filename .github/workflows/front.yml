@@ -12,7 +12,7 @@ env:
   GKE_CLUSTER: scraper-cluster
   GKE_ZONE: europe-central2
   DEPLOYMENT_NAME: scraper-front
-  NEW_IMAGE: europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-front:33
+  NEW_IMAGE: europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-front:${{github.run_number}}
 
 jobs:
   setup-and-deploy:
@@ -45,21 +45,21 @@ jobs:
         cluster_name: scraper-cluster
         location: europe-central2
 
-    # # Build the Docker image
-    # - name: Build
-    #   run: |-
-    #     docker build \
-    #       --tag "$NEW_IMAGE" \
-    #       ./front/
+    # Build the Docker image
+    - name: Build
+      run: |-
+        docker build \
+          --tag "$NEW_IMAGE" \
+          ./front/
 
-    # - name: Giving access to zone
-    #   run: |-
-    #     gcloud auth configure-docker $GKE_ZONE-docker.pkg.dev
+    - name: Giving access to zone
+      run: |-
+        gcloud auth configure-docker $GKE_ZONE-docker.pkg.dev
 
-    # # Push the Docker image to Google Container Registry
-    # - name: Publish
-    #   run: |-
-    #     docker push "$NEW_IMAGE"
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |-
+        docker push "$NEW_IMAGE"
 
     # Deploy sample image to the GKE cluster
     - name: Deploy
