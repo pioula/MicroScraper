@@ -68,8 +68,9 @@ def get_new_posts():
     for post in top_posts:
         # Determine what are possible post fields. Debug only.
         # pprint.pprint(vars(post))
-        if post.selftext_html is None:
-            continue
+
+        # if post.selftext_html is None:
+        #    continue
 
         post_dict = dict()
 

@@ -4,6 +4,7 @@ import json
 
 RABBIT_DNS = 'scraper-rabbitmq-service.scraper'
 
+
 # Sends data passed as a dictionary to a given address.
 def send_data(data_dict):
     try:
