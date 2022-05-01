@@ -22,7 +22,10 @@ def init_reddit_instance():
 
 # Post methods that need a little work
 def get_author(post):
-    return post.author.name
+    try:
+        return post.author.name
+    except AttributeError:
+        return '[Deleted]'
 
 
 def get_subreddit(post):
@@ -69,6 +72,8 @@ def get_single_image(post):
 
 
 def get_multi_image(post):
+    if post.secure_media is None:
+        return None
     media_metadata = post.media_metadata
     images = []
     for media in media_metadata.values():
@@ -99,18 +104,24 @@ def get_new_posts():
         for param in interesting_post_parameters:
             post_dict[param] = get_post_param(post, param)
 
-        try:
-            post_dict['single_image'] = get_single_image(post)
-        #if post.selftext_html is None and post_dict['single_image'] is None:
-        #    post_dict['multi_image'] = get_multi_image(post)
+        post_dict['single_image'] = get_single_image(post)
+        if post.selftext_html is None and post_dict['single_image'] is None:
+            sys.stderr.write("Unknown post format!\n")
+            continue
+            # Experimental code below
+            # try:
+            #    post_dict['multi_image'] = get_multi_image(post)
+            # except:
+            #    pprint.pprint(vars(post))
+            #    raise
 
-        except AttributeError:
-            sys.stderr.write("Unable to fetch media\n")
+        #except AttributeError:
+        #    sys.stderr.write("Unable to fetch media\n")
 
         data_dict[counter] = post_dict
         counter += 1
 
-    print(data_dict)
+    # print(data_dict)
     return data_dict
 
 
