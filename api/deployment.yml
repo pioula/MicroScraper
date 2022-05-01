@@ -7,7 +7,7 @@ metadata:
   labels:
     app: "scraper-api"
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: "scraper-api"
@@ -40,7 +40,7 @@ spec:
     name: "scraper-api"
     apiVersion: "apps/v1"
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 3
   metrics:
   - type: "Resource"
     resource:
