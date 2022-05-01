@@ -7,11 +7,6 @@ from apscheduler.triggers.interval import IntervalTrigger
 INTERVAL = 1
 
 
-interesting_post_parameters = (
-    'author', 'title', 'downs', 'ups', 'subreddit', 'url', 'created', 'selftext_html'
-)
-
-
 def init_reddit_instance():
     reddit_instance = praw.Reddit(
         client_id='6MkzuKozOa5zec13CM6H7A',
@@ -38,25 +33,9 @@ def get_date(post):
     return post_datetime
 
 
-# Simple functions that should be possible to code inline
-def get_title(post):
-    return post.title
-
-
-def get_downs(post):
-    return post.downs
-
-
-def get_ups(post):
-    return post.ups
-
-
-def get_url(post):
-    return post.url
-
-
-def get_selftext_html(post):
-    return post.selftext_html
+interesting_post_parameters = (
+    'author', 'title', 'downs', 'ups', 'subreddit', 'url', 'created', 'selftext_html'
+)
 
 
 def get_post_param(post, parameter):
@@ -70,20 +49,10 @@ def get_post_param(post, parameter):
     if parameter == 'created':
         return get_date(post)
 
-    if parameter == 'title':
-        return get_title(post)
-    if parameter == 'downs':
-        return get_downs(post)
-    if parameter == 'ups':
-        return get_ups(post)
-    if parameter == 'url':
-        return get_url(post)
-    if parameter == "selftext_html":
-        return get_selftext_html(post)
-    raise NotImplementedError('Unknown parameter: ' + parameter + ' encountered!')
+    return getattr(post, parameter)
 
 
-def get_new_posts(reddit_instance):
+def get_new_posts():
     top_posts = reddit.subreddit('MachineLearning').new(limit=100)
     print("Posts fetched")
     data_dict = dict()
@@ -109,7 +78,7 @@ scheduler = BlockingScheduler()
 
 @scheduler.scheduled_job(IntervalTrigger(hours=INTERVAL))
 def scrap_data():
-    data_dict = get_new_posts(reddit)
+    data_dict = get_new_posts()
     comm.send_data(data_dict)
 
 
