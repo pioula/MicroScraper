@@ -26,10 +26,10 @@ spec:
         image: "scraper-front"
         resources:
           requests:
-            cpu: 300m
+            cpu: 10m
             memory: 500Mi
           limits:
-            cpu: 300m
+            cpu: 10m
             memory: 500Mi
 ---
 apiVersion: "autoscaling/v2beta1"
