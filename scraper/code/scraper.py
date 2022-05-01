@@ -99,13 +99,13 @@ def get_new_posts():
         for param in interesting_post_parameters:
             post_dict[param] = get_post_param(post, param)
 
-        #try:
-        post_dict['single_image'] = get_single_image(post)
+        try:
+            post_dict['single_image'] = get_single_image(post)
         #if post.selftext_html is None and post_dict['single_image'] is None:
         #    post_dict['multi_image'] = get_multi_image(post)
 
-        #except AttributeError:
-        #    sys.stderr.write("Unable to fetch media\n")
+        except AttributeError:
+            sys.stderr.write("Unable to fetch media\n")
 
         data_dict[counter] = post_dict
         counter += 1
@@ -119,13 +119,12 @@ scheduler = BlockingScheduler()
 
 @scheduler.scheduled_job(IntervalTrigger(hours=INTERVAL))
 def scrap_data():
-    data_dict = {'godzina':'klepania'}#get_new_posts()
+    data_dict = get_new_posts()
     comm.send_data(data_dict)
 
 
 if __name__ == '__main__':
     reddit = init_reddit_instance()
     print("Instance created")
-    #get_new_posts()
     scrap_data()
-    #scheduler.start()
+    scheduler.start()
