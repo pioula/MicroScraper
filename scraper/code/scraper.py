@@ -36,8 +36,12 @@ def get_date(post):
     return post_datetime
 
 
+def get_permalink(post):
+    return 'reddit.com' + post.permalink
+
+
 interesting_post_parameters = (
-    'author', 'title', 'downs', 'ups', 'subreddit', 'url', 'created', 'selftext_html'
+    'author', 'title', 'downs', 'ups', 'subreddit', 'permalink', 'created', 'selftext_html'
 )
 
 
@@ -51,16 +55,34 @@ def get_post_param(post, parameter):
         return get_subreddit(post)
     if parameter == 'created':
         return get_date(post)
+    if parameter == 'permalink':
+        return get_permalink(post)
 
     return getattr(post, parameter)
 
 
-def get_media(post):
-    return post.preview.images.source.url
+def get_single_image(post):
+    try:
+        return post.preview['images'][0]['source']['url']
+    except AttributeError:
+        return None
+
+
+def get_multi_image(post):
+    media_metadata = post.media_metadata
+    images = []
+    for media in media_metadata.values():
+        resolutions = media['p']
+        result = resolutions[0]
+        for img in resolutions:
+            if result['x'] < img['x']:
+                result = img
+        images.append(result)
+    return images
 
 
 def get_new_posts():
-    top_posts = reddit.subreddit('MachineLearning').new(limit=10)
+    top_posts = reddit.subreddit('MachineLearning').new(limit=200)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
@@ -77,16 +99,18 @@ def get_new_posts():
         for param in interesting_post_parameters:
             post_dict[param] = get_post_param(post, param)
 
-        try:
-            post_dict['media'] = get_media(post)
-        except AttributeError:
-            sys.stderr.write("Unable to fetch media\n")
+        #try:
+        post_dict['single_image'] = get_single_image(post)
+        #if post.selftext_html is None and post_dict['single_image'] is None:
+        #    post_dict['multi_image'] = get_multi_image(post)
+
+        #except AttributeError:
+        #    sys.stderr.write("Unable to fetch media\n")
 
         data_dict[counter] = post_dict
         counter += 1
 
-    # if(DEBUG)
-    #     print(data_dict)
+    print(data_dict)
     return data_dict
 
 
@@ -95,12 +119,13 @@ scheduler = BlockingScheduler()
 
 @scheduler.scheduled_job(IntervalTrigger(hours=INTERVAL))
 def scrap_data():
-    data_dict = get_new_posts()
+    data_dict = {'godzina':'klepania'}#get_new_posts()
     comm.send_data(data_dict)
 
 
 if __name__ == '__main__':
     reddit = init_reddit_instance()
     print("Instance created")
+    #get_new_posts()
     scrap_data()
-    scheduler.start()
+    #scheduler.start()
