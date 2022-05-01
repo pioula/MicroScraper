@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "scraper-api"
+  namespace: "scraper"
+  labels:
+    app: "scraper-api"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "scraper-api"
+  template:
+    metadata:
+      labels:
+        app: "scraper-api"
+    spec:
+      containers:
+      - name: "scraper-api-sha256-1"
+        image: "europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-api@sha256:33b3590a6ed29c6dd9503e6f3ff0dbae1d9aac379bb7583df25233aebbf60295"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "scraper-api-hpa-e6b8"
+  namespace: "scraper"
+  labels:
+    app: "scraper-api"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "scraper-api"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
