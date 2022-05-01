@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "scraper"
+  namespace: "scraper"
+  labels:
+    app: "scraper"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "scraper"
+  template:
+    metadata:
+      labels:
+        app: "scraper"
+    spec:
+      containers:
+      - name: "scraper-sha256-1"
+        image: "scraper"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "scraper-hpa-2ooi"
+  namespace: "scraper"
+  labels:
+    app: "scraper"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "scraper"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
