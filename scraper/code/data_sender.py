@@ -2,13 +2,14 @@ import sys
 import pika
 import json
 
+RABBIT_DNS = 'scraper-rabbitmq-service.scraper'
 
 # Sends data passed as a dictionary to a given address.
 def send_data(data_dict):
     try:
         connection = pika.BlockingConnection(
             # TODO: stop using hardcoded, turn to DNS
-            pika.ConnectionParameters(host='10.8.15.120'))
+            pika.ConnectionParameters(host=RABBIT_DNS))
     except pika.exceptions.AMQPConnectionError:
         sys.stderr.write('Unable to connect to RabbitMQ')
         sys.exit(1)
