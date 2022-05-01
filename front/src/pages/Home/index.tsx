@@ -28,7 +28,7 @@ function Home() {
         <>
             { data.length === 0 ? <div>loading...</div> :
                 <div>
-                    { parse(data[0].selftext_html) }
+                    { parse(data[1].selftext_html) }
                 </div>
             }
         </>
