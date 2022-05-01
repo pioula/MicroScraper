@@ -1,3 +1,6 @@
+import pprint
+import sys
+
 import praw
 import data_sender as comm
 from datetime import datetime
@@ -52,19 +55,31 @@ def get_post_param(post, parameter):
     return getattr(post, parameter)
 
 
+def get_media(post):
+    return post.preview.images.source.url
+
+
 def get_new_posts():
-    top_posts = reddit.subreddit('MachineLearning').new(limit=100)
+    top_posts = reddit.subreddit('MachineLearning').new(limit=10)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
 
     for post in top_posts:
+        # Determine what are possible post fields. Debug only.
+        # pprint.pprint(vars(post))
         if post.selftext_html is None:
             continue
+
         post_dict = dict()
 
         for param in interesting_post_parameters:
             post_dict[param] = get_post_param(post, param)
+
+        try:
+            post_dict['media'] = get_media(post)
+        except AttributeError:
+            sys.stderr.write("Unable to fetch media\n")
 
         data_dict[counter] = post_dict
         counter += 1
@@ -86,4 +101,5 @@ def scrap_data():
 if __name__ == '__main__':
     reddit = init_reddit_instance()
     print("Instance created")
+    scrap_data()
     scheduler.start()
