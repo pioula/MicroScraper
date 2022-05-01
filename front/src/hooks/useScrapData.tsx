@@ -6,7 +6,8 @@ function useScrapData() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-        }).then((response) => response.json());
+        }).then((response) => response.json())
+        .catch((err) => { console.log("error, ", err); return { foo: 'bar' } });
     }
 
     return scrapData;
