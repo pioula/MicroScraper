@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
       - name: "scraper-sha256-1"
-        image: "scraper"
+        image: "europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper@sha256:8894979fad2260ef146c86c4798b88f2dc0e725102986274bc6ca6368573f98f"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "scraper-hpa-bjvh"
+  name: "scraper-hpa-2ooi"
   namespace: "scraper"
   labels:
     app: "scraper"
@@ -31,3 +31,11 @@ spec:
   scaleTargetRef:
     kind: "Deployment"
     name: "scraper"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
