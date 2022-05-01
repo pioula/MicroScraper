@@ -8,7 +8,6 @@ RABBIT_DNS = 'scraper-rabbitmq-service.scraper'
 def send_data(data_dict):
     try:
         connection = pika.BlockingConnection(
-            # TODO: stop using hardcoded, turn to DNS
             pika.ConnectionParameters(host=RABBIT_DNS))
     except pika.exceptions.AMQPConnectionError:
         sys.stderr.write('Unable to connect to RabbitMQ')
