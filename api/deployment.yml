@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: "scraper-api-sha256-1"
-        image: "europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-api@sha256:33b3590a6ed29c6dd9503e6f3ff0dbae1d9aac379bb7583df25233aebbf60295"
+        image: "scraper-api"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
