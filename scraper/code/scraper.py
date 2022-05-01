@@ -69,7 +69,8 @@ def get_new_posts():
         data_dict[counter] = post_dict
         counter += 1
 
-    print(data_dict)
+    # if(DEBUG)
+    #     print(data_dict)
     return data_dict
 
 
