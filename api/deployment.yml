@@ -23,7 +23,7 @@ spec:
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "scraper-api-hpa-e6b8"
+  name: "scraper-api-hpa-0mss"
   namespace: "scraper"
   labels:
     app: "scraper-api"
