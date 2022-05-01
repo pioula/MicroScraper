@@ -44,14 +44,6 @@ jobs:
       with:
         cluster_name: scraper-cluster
         location: europe-central2
-    
-    # # Get the GKE credentials so we can deploy to the cluster
-    # - name: Get gcloud credentials
-    #   run: |-
-    #     gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-
-    - id: get-pods
-      run: kubectl get pods
 
     # Build the Docker image
     - name: Build
