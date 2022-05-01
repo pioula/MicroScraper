@@ -37,4 +37,6 @@ class FirebaseHandler {
     }
 }
 
-export default FirebaseHandler;
+const firebaseHandler = new FirebaseHandler();
+
+export default firebaseHandler;

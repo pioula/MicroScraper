@@ -1,7 +1,5 @@
 import amqp from 'amqplib/callback_api.js';
-import FirebaseHandler from './FirebaseHandler.mjs';
-
-const handler = new FirebaseHandler();
+import firebaseHandler from './FirebaseHandler.mjs';
 
 function connectToRedditDataQueue() {
     amqp.connect('amqp://10.8.15.120', function(error0, connection) {
@@ -23,7 +21,7 @@ function connectToRedditDataQueue() {
 
             channel.consume(queue, function(msg) {
                 console.log(" [x] Received %s", JSON.parse(msg.content.toString()));
-                handler.putData(JSON.parse(msg.content.toString()))
+                firebaseHandler.putData(JSON.parse(msg.content.toString()))
             }, {
                 noAck: true
             });
