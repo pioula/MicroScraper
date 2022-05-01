@@ -21,11 +21,11 @@ spec:
         image: "scraper-api"
         resources:
           requests:
-            cpu: 700m
-            memory: 800Mi
+            cpu: 200m
+            memory: 200Mi
           limits:
-            cpu: 700m
-            memory: 800Mi
+            cpu: 200m
+            memory: 200Mi
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
