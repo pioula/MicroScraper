@@ -24,6 +24,13 @@ spec:
       containers:
       - name: "scraper-front-sha256-1"
         image: "scraper-front"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 100m
+            memory: 200Mi
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
