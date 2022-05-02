@@ -169,11 +169,15 @@ scheduler = BlockingScheduler()
 
 @scheduler.scheduled_job(IntervalTrigger(hours=INTERVAL))
 def scrap_data():
+    print("Beginning to scrap data")
     data_dict = get_new_posts()
     comm.send_data(data_dict)
 
 
 if __name__ == '__main__':
+    print("Launching app")
+    sys.stderr.write("Checking whether stdout and stderr work\n")
+    sys.stdout.write("SAMPLETEXT SAMPLETEXT hope it will log something in GCP\n")
     reddit = init_reddit_instance()
     print("Instance created")
     #get_new_posts()
