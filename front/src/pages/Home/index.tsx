@@ -1,6 +1,9 @@
+import { Container, Row } from 'react-bootstrap';
 import Post from '~/components/Post';
 import { html_post_t } from '~/services/post_t';
 import useHome from './hooks/useHome';
+
+import styles from './styles/styles';
 
 // interface post_t {
 //     author: string,
@@ -34,7 +37,16 @@ function Home() {
     
     return (
         <>
-            <div>
+            <div style={ styles.post }>
+                <Post post={ foo_html }/>
+            </div>
+            <div style={ styles.post }>
+                <Post post={ foo_html }/>
+            </div>
+            <div style={ styles.post }>
+                <Post post={ foo_html }/>
+            </div>
+            <div style={ styles.post }>
                 <Post post={ foo_html }/>
             </div>
         </>
