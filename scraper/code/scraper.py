@@ -185,4 +185,4 @@ if __name__ == '__main__':
     scrap_data()
     scheduler.start()
 else:
-    raise NotImplementedError('TEST')
+    raise NotImplementedError('TEST2')
