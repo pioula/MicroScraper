@@ -1,0 +1,19 @@
+{
+  "name": "userapi",
+  "version": "1.0.0",
+  "description": "An api that talks with database which stores posts saved by users",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "nodemon index.mjs",
+    "dockerstart": "node index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pioula/MicroScraper"
+  },
+  "author": "pioula, MarcinMordecki",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
