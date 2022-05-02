@@ -11,8 +11,8 @@ env:
   PROJECT_ID: redditscraper-348820
   GKE_CLUSTER: scraper-cluster
   GKE_ZONE: europe-central2
-  DEPLOYMENT_NAME: scraper-user-api
-  NEW_IMAGE: europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/scraper-user-api:${{github.run_number}}
+  DEPLOYMENT_NAME: user-api
+  NEW_IMAGE: europe-central2-docker.pkg.dev/redditscraper-348820/scraper-repo/user-api:${{github.run_number}}
 
 jobs:
   setup-and-deploy:
