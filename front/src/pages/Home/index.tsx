@@ -5,15 +5,45 @@ import parse from "html-react-parser";
 
 import useScrapData from '~/hooks/useScrapData';
 
+type media_t = {
+    url: string
+}
+
+type media_gallery_t = {
+    url: string
+}
+
+type misc_t = {
+    url: string
+}
+
 type post_t = {
     author: string,
-    created: string,
-    downs: number,
-    selftext_html: string,
-    subreddit: string,
     title: string,
+    subreddit: string,
     ups: number,
-    url: string,
+    permalink: string,
+    created: string,
+    type: string,
+    html?: string,
+    media?:  media_t,
+    media_gallery?: media_gallery_t,
+    misc?: misc_t
+}
+
+function parsePost(post: post_t) {
+    switch (post.type) {
+        case 'html':
+            return parse(post.html)
+        case 'media':
+            return 'sample media'
+        case 'media_gallery':
+            return 'sample media_gallery'
+        case 'misc':
+            return 'misc'
+        default:
+            return 'unknown'
+    }
 }
 
 function Home() {
@@ -28,7 +58,7 @@ function Home() {
         <>
             { data.length === 0 ? <div>loading...</div> :
                 <div>
-                    { parse(data[1].selftext_html) }
+                    { parsePost(data[1]) }
                 </div>
             }
         </>

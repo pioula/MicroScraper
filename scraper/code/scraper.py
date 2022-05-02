@@ -44,7 +44,7 @@ def get_permalink(post):
 
 
 interesting_post_parameters = (
-    'author', 'title', 'ups', 'subreddit', 'permalink', 'created', 'selftext_html'
+    'author', 'title', 'ups', 'subreddit', 'permalink', 'created', 'html'
 )
 
 
@@ -60,6 +60,8 @@ def get_post_param(post, parameter):
         return get_date(post)
     if parameter == 'permalink':
         return get_permalink(post)
+    if parameter == 'html':
+        return post.selftext_html
 
     return getattr(post, parameter)
 
@@ -110,7 +112,7 @@ def get_multi_image(post):
 
 
 def get_new_posts():
-    top_posts = reddit.subreddit('all').new(limit=200)
+    top_posts = reddit.subreddit('MachineLearning+Dankmemes+Cars').new()
     print("Posts fetched")
     data_dict = dict()
     counter = 0
@@ -129,11 +131,16 @@ def get_new_posts():
 
         if post.selftext_html is None:
             post_dict['media'] = get_media(post)
+            post_dict['type'] = 'media'
+        else:
+            post_dict['type'] = 'html'
         if post.selftext_html is None and post_dict['media'] is None:
             if hasattr(post, 'media_metadata') and post.media_metadata:
                 post_dict['media_gallery'] = get_multi_image(post)
+                post_dict['type'] = 'media_gallery'
             else:
                 post_dict['misc'] = post.url
+                post_dict['type'] = 'misc'
             continue
             # Experimental code below
             # try:
