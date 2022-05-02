@@ -1,36 +1,29 @@
-# Uwagi:
+# Post content description
 
-## Autoryzacja
+## Basic post structure:
+- author : string
+- title : string
+- subreddit : string
+- ups : number (of upvotes)
+- permalink : href (link to the post)
+- created date: 'Y-m-d H:M:S' (string)
 
-Należałoby dodać OAuth autoryzację, info pod linkiem:
-https://praw.readthedocs.io/en/latest/getting_started/authentication.html
-
-## Co można scrapować:
-- 'author': Redditor(name='The_Depressed_One1'),
-- 'title': "I don't know how it is in your country, but here it has already "
-          'started',
-- 'created_utc': 1651327344.0, (lub created, nwm czym się różni)
-- 'downs': 0,
-- 'ups': 17,
-- 'upvote_ratio': 0.95,
-- 'score': 17,
-- 'subreddit': Subreddit(display_name='dankmemes'),
-- 'url': 'https://i.redd.it/wf4ncnphaow81.jpg',
-- 'post_hint': 'image',
-- 'preview': {'enabled': True,
-             'images': [{'source': {'height': 1068,
-                                    'url': 'https://preview.redd.it/wf4ncnphaow81.jpg?auto=webp&s=fa0fed3ffebbc853ba36ba17ccb786fcd6b140b6',
-                                    'width': 1080}}]}
-- 'selftext': 'sampletextsampletext' / link
-- 'over_18': False,
-- 'num_comments': 3,
-
-## Co trzeba scrapować
-- Autor
-- title
-- downs
-- ups
-- subreddit
-- url
-- selftext / link
-- created_utc
+## Post types and custom contents:
+### type = 'html'
+- html - html text
+### type = 'media'
+- media - Either a link to a video or array of media contents:
+Each array element is of the following form:
+- 'type' : 'url'
+Where type could be, but is not limited to:
+- 'image', 'gif', 'mp4' etc.
+### type = 'media_gallery'
+- media_gallery : array of gallery_images
+Gallery image contains following information:
+- 'x' : number, 'y' : number - resolution
+- 'src' : href to the source image
+### type = 'misc'
+Various other, less popular, types of posts, such as post of the following form:
+'Title'
+'Comments'
+It is recommended to disregard such posts.
