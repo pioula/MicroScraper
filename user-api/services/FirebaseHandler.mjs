@@ -17,8 +17,9 @@ class FirebaseHandler {
         this.database = getDatabase(this.app);
     }
 
-    async updateUserPosts(user, posts) {
-        await update(ref(this.database, `users/${user}`), posts);
+    async updateUsersPosts(user, posts) {
+        console.log(user, posts);
+        await set(ref(this.database, `users/${user}`), posts);
     }
 
     async getUsersPosts(user) {
