@@ -1,16 +1,16 @@
-type media_t = {
-    url: string
+type image_t = {
+    image: string
 }
 
-type media_gallery_t = {
-    url: string
+type gif_t = {
+    gif: string,
 }
 
-type misc_t = {
-    url: string
-}
+type mp4_t = {
+    mp4: string,
+}   
 
-type post_t = {
+interface post_t {
     author: string,
     title: string,
     subreddit: string,
@@ -18,10 +18,17 @@ type post_t = {
     permalink: string,
     created: string,
     type: string,
-    html?: string,
-    media?:  media_t,
-    media_gallery?: media_gallery_t,
-    misc?: misc_t
 }
+
+export interface html_post_t extends post_t {
+    type: 'html',
+    html: string,
+}
+
+export interface media_post_t extends post_t {
+    type: 'media',
+    medias: Array<image_t | gif_t | mp4_t>
+}
+
 
 export default post_t;
