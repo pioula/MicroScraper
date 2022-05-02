@@ -141,7 +141,6 @@ def get_new_posts():
             else:
                 post_dict['misc'] = post.url
                 post_dict['type'] = 'misc'
-            continue
             # Experimental code below
             # try:
             #    post_dict['multi_image'] = get_multi_image(post)
@@ -152,10 +151,16 @@ def get_new_posts():
         #except AttributeError:
         #    sys.stderr.write("Unable to fetch media\n")
 
+        if 'type' not in post_dict:
+            pprint.pprint(vars(post))
+            sys.stderr.write("Unknown post type!\n")
         data_dict[counter] = post_dict
         counter += 1
+        if counter % 50 == 0:
+            sys.stdout.write('Downloaded ' + str(counter) + " posts so far!\n")
 
     # print(data_dict)
+    sys.stdout.write('Posts fetched\n')
     return data_dict
 
 
@@ -171,5 +176,6 @@ def scrap_data():
 if __name__ == '__main__':
     reddit = init_reddit_instance()
     print("Instance created")
+    #get_new_posts()
     scrap_data()
     scheduler.start()
