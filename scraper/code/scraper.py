@@ -157,10 +157,10 @@ def get_new_posts():
         data_dict[counter] = post_dict
         counter += 1
         if counter % 50 == 0:
-            sys.stdout.write('Downloaded ' + str(counter) + " posts so far!\n")
+            print('Downloaded ' + str(counter) + " posts so far!\n")
 
     # print(data_dict)
-    sys.stdout.write('Posts fetched\n')
+    print("posts parsed")
     return data_dict
 
 
