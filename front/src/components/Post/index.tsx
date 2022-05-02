@@ -4,15 +4,16 @@ import HtmlPost from './components/HtmlPost';
 import MediaPost from './components/MediaPost';
 
 import { html_post_t } from '~/services/post_t';
+import styles from './styles/styles';
 
 function Post(props: { post: post_t }) {
     return (
         <>
             <div>
                 <div>
-                    <p>{ props.post.author }</p>
-                    <p>{ props.post.created }</p>
-                    <p>{ props.post.subreddit }</p>
+                    <p style={ {...styles.post_info, ...styles.author} } >{ props.post.author }</p>
+                    <p style={ styles.post_info } >{ props.post.created }</p>
+                    <p style={ styles.post_info } >{ props.post.subreddit }</p>
                 </div>
                 <h1>{ props.post.title }</h1>
                 <div>

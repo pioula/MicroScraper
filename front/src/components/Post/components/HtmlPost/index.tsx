@@ -19,20 +19,9 @@ import { html_post_t } from '~/services/post_t';
 
 function HtmlPost(props: { post: html_post_t }) {
     return (
-        <div>
-            <div>
-                <p>{ props.post.author }</p>
-                <p>{ props.post.created }</p>
-                <p>{ props.post.subreddit }</p>
-            </div>
-            <h1>{ props.post.title }</h1>
-            <div>
-                { props.post.html }
-            </div>
-            <div>
-                <p>{ props.post.ups }</p>
-            </div>
-        </div>
+        <>
+            { props.post.html }
+        </>
     );
 }
 
