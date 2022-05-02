@@ -183,3 +183,6 @@ if __name__ == '__main__':
     #get_new_posts()
     scrap_data()
     scheduler.start()
+else:
+    print("This should never happen")
+    sys.exit(1)
