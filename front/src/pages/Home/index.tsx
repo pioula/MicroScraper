@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import parse from "html-react-parser";
+import parse from 'html-react-parser';
 
 import useScrapData from '~/hooks/useScrapData';
 
@@ -32,17 +32,21 @@ type post_t = {
 }
 
 function parsePost(post: post_t) {
-    switch (post.type) {
-        case 'html':
-            return parse(post.html)
-        case 'media':
-            return 'sample media'
-        case 'media_gallery':
-            return 'sample media_gallery'
-        case 'misc':
-            return 'misc'
-        default:
-            return 'unknown'
+    try {
+        switch (post.type) {
+            case 'html':
+                return parse(post.html)
+            case 'media':
+                return 'sample media'
+            case 'media_gallery':
+                return 'sample media_gallery'
+            case 'misc':
+                return 'misc'
+            default:
+                return 'unknown'
+        }
+    } catch (x) {
+        return 'I have no type!\n' + x.message
     }
 }
 
