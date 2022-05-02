@@ -175,7 +175,6 @@ def scrap_data():
 
 
 if __name__ == '__main__':
-    raise NotImplementedError('TEST')
     print("Launching app")
     sys.stderr.write("Checking whether stdout and stderr work\n")
     sys.stdout.write("SAMPLETEXT SAMPLETEXT hope it will log something in GCP\n")
@@ -184,5 +183,3 @@ if __name__ == '__main__':
     #get_new_posts()
     scrap_data()
     scheduler.start()
-else:
-    raise NotImplementedError('TEST2')
