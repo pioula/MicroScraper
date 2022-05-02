@@ -46,7 +46,7 @@ function parsePost(post: post_t) {
                 return 'unknown'
         }
     } catch (x) {
-        return 'I have no type!\n' + x.message
+        return 'I have no type!\n' + (x as Error).message
     }
 }
 
