@@ -1,13 +1,16 @@
 type image_t = {
-    image: string
+    type: "image_t";
+    image: string;
 }
 
 type gif_t = {
-    gif: string,
+    type: "gif_t";
+    gif: string;
 }
 
 type mp4_t = {
-    mp4: string,
+    type: "mp4_t";
+    mp4: string;
 }   
 
 interface post_t {
@@ -32,3 +35,4 @@ export interface media_post_t extends post_t {
 
 
 export default post_t;
+export type { image_t, gif_t, mp4_t }
