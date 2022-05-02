@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "user-api"
+  namespace: "scraper"
+  labels:
+    app: "user-api"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "user-api"
+  template:
+    metadata:
+      labels:
+        app: "user-api"
+    spec:
+      containers:
+      - name: "user-api-sha256-1"
+        image: "user-api"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "user-api-hpa-6ero"
+  namespace: "scraper"
+  labels:
+    app: "user-api"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "user-api"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
