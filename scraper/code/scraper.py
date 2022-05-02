@@ -76,9 +76,9 @@ def get_images(post):
             if 'variants' in image.keys() and image['variants']:
                 variants_of_image = image['variants']
                 variants = list(variants_of_image.keys())
-                result.append({variants[0]: variants_of_image[variants[0]]['source']['url']})
+                result.append({variants[0]: variants_of_image[variants[0]]['source']})
             else:
-                result.append({'image': image['source']['url']})
+                result.append({'image': image['source']})
         return result
     except AttributeError as e:
         print(e)
@@ -93,11 +93,13 @@ def get_media(post):
     if 'reddit_video_preview' not in post.preview:
         return get_images(post)
 
-    return post.preview['reddit_video_preview']['fallback_url']
+    return [dict({'mp4': post.preview['reddit_video_preview']['fallback_url'],
+                  'height': post.preview['reddit_video_preview']['height'],
+                  'width': post.preview['reddit_video_preview']['width']})]
 
 
 def get_multi_image(post):
-    if post.secure_media is None:
+    if post.media_metadata is None:
         return None
     media_metadata = post.media_metadata
     images = []
@@ -107,23 +109,19 @@ def get_multi_image(post):
         for img in resolutions:
             if result['x'] < img['x']:
                 result = img
-        images.append(result)
+        images.append(dict({'image': result['u'],
+                            'height': result['y'],
+                            'width': result['x']}))
     return images
 
 
 def get_new_posts():
-    top_posts = reddit.subreddit('MachineLearning+Dankmemes+Cars').new()
+    top_posts = reddit.subreddit('MachineLearning+Cars+dataisbeautiful').new(limit=1000)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
 
     for post in top_posts:
-        # Determine what are possible post fields. Debug only.
-        # pprint.pprint(vars(post), sys.stderr)
-
-        # if post.selftext_html is None:
-        #    continue
-
         post_dict = dict()
 
         for param in interesting_post_parameters:
@@ -136,24 +134,17 @@ def get_new_posts():
             post_dict['type'] = 'html'
         if post.selftext_html is None and post_dict['media'] is None:
             if hasattr(post, 'media_metadata') and post.media_metadata:
-                post_dict['media_gallery'] = get_multi_image(post)
-                post_dict['type'] = 'media_gallery'
+                post_dict['media'] = get_multi_image(post)
+                post_dict['type'] = 'media'
             else:
                 post_dict['misc'] = post.url
                 post_dict['type'] = 'misc'
-            # Experimental code below
-            # try:
-            #    post_dict['multi_image'] = get_multi_image(post)
-            # except:
-            #    pprint.pprint(vars(post), sys.stderr)
-            #    raise
-
-        #except AttributeError:
-        #    sys.stderr.write("Unable to fetch media\n")
 
         if 'type' not in post_dict:
             pprint.pprint(vars(post))
             sys.stderr.write("Unknown post type!\n")
+            continue
+            # Should never happen.
         data_dict[counter] = post_dict
         counter += 1
         if counter % 50 == 0:
@@ -161,6 +152,7 @@ def get_new_posts():
 
     # print(data_dict)
     print("posts parsed")
+    # pprint.pprint(data_dict)
     return data_dict
 
 
@@ -180,7 +172,6 @@ if __name__ == '__main__':
     sys.stdout.write("SAMPLETEXT SAMPLETEXT hope it will log something in GCP\n")
     reddit = init_reddit_instance()
     print("Instance created")
-    #get_new_posts()
     scrap_data()
     scheduler.start()
 else:
