@@ -102,7 +102,7 @@ def get_multi_image(post):
     return images
 
 
-source_subreddits = ['MachineLearning', 'MachineLearningMemes', "DataIsBeautiful"]
+source_subreddits = ['MachineLearning', 'Kubernetes', 'DataIsBeautiful', 'Cars']
 
 
 def get_new_posts():
