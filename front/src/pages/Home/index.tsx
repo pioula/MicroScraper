@@ -1,5 +1,3 @@
-import { Container, Row } from 'react-bootstrap';
-
 import Post from '~/components/Post';
 
 import useHome from './hooks/useHome';
@@ -34,8 +32,6 @@ const foo_html: html_post_t = {
     permalink: 'foo.com',
     created: '02.05.2022'
 }
-
-
 
 const foo_media: media_post_t = {
     type: 'media',

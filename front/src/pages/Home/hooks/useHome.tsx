@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import useScrapData from "~/hooks/useScrapData";
 import post_t from "~/services/post_t";
-import useParser from "./useParser";
+import useParser from "../../../components/Post/components/HtmlPost/useParser";
 
 function useHome() {
-    const { parsePost } = useParser();
+    const { parsePostContent: parsePost } = useParser();
     const scrapData = useScrapData();
     const [data, setData] = useState<Array<post_t>>([]);
 
@@ -12,7 +12,7 @@ function useHome() {
          scrapData().then((scrappedData) => setData(scrappedData) );
     }, []);
 
-    return { content: parsePost(data[0]) };
+    return { content: 'foo' };
 }
 
 export default useHome;
