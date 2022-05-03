@@ -84,7 +84,7 @@ def get_images(post):
         return result
     except AttributeError as e:
         print(e)
-        pprint.pprint(vars(post), sys.stderr)
+    #    pprint.pprint(vars(post), sys.stderr)
         return None
 
 
@@ -143,14 +143,14 @@ def get_new_posts():
                 post_dict['type'] = 'misc'
 
         if 'type' not in post_dict:
-            pprint.pprint(vars(post))
+    #        pprint.pprint(vars(post))
             sys.stderr.write("Unknown post type!\n")
             continue
             # Should never happen.
         data_dict[counter] = post_dict
         counter += 1
-        if counter % 50 == 0:
-            print('Downloaded ' + str(counter) + " posts so far!\n")
+    #    if counter % 50 == 0:
+    #        print('Downloaded ' + str(counter) + " posts so far!\n")
 
     # print(data_dict)
     print("posts parsed")
@@ -170,8 +170,6 @@ def scrap_data():
 
 if __name__ == '__main__':
     print("Launching app")
-    sys.stderr.write("Checking whether stdout and stderr work\n")
-    sys.stdout.write("SAMPLETEXT SAMPLETEXT hope it will log something in GCP\n")
     reddit = init_reddit_instance()
     print("Instance created")
     scrap_data()
