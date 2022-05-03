@@ -1,36 +1,34 @@
 import { Carousel } from 'react-bootstrap';
 
-import { media_post_t, image_t, gif_t, mp4_t } from '~/services/post_t';
+import { media_post_t } from '~/services/post_t';
+
+function MediaImage(props: { image: string }) {
+    return (
+        <img
+            src= { props.image }
+            alt="Media Image"
+            style={{maxWidth: '100%'}}
+        />
+    );
+}
 
 function MediaPost(props: { post: media_post_t }) {
     return (
-        <Carousel>
+        <>
             {
-                props.post.medias.map((media) => {
-                    if (media.type === "image_t")
-                        return <Carousel.Item>
-                            <img
-                                src= { media.image }
-                                alt="Media Image"
-                            />
-                        </Carousel.Item>
-                    else if (media.type === "gif_t")
-                        return <Carousel.Item>
-                            <img
-                                src= { media.gif }
-                                alt="Media gif"
-                            />
-                        </Carousel.Item>
-                    else if (media.type === "mp4_t")
-                        return <Carousel.Item>
-                            <video controls>
-                                <source src={ media.mp4 } type="video/mp4"></source>
-                                Unable to play media video
-                            </video>
-                        </Carousel.Item>
-                })
+                props.post.media.length === 1 ?
+                    <MediaImage image={ props.post.media[0] } /> :
+                    (<Carousel>
+                        {
+                            props.post.media.map((media) =>
+                                <Carousel.Item>
+                                    <MediaImage image={ media } />
+                                </Carousel.Item>
+                            )
+                        }
+                    </Carousel>)
             }
-        </Carousel>
+        </>
     )
 }
 

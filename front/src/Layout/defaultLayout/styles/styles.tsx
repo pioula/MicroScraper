@@ -1,7 +1,7 @@
 const styles = {
     header: {
         position: 'fixed' as 'fixed',
-        backgroundColor: '#696969',
+        backgroundColor: '#FFFFFF',
         width: '100%',
         paddingLeft: 30,
         top: 0,

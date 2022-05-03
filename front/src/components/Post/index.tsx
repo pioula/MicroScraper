@@ -10,19 +10,19 @@ import { Col, Container, Row } from 'react-bootstrap';
 function Post(props: { post: post_t }) {
     return (
         <Container>
-            <Row style={ styles.post_shadow }>
-                <Col style={ styles.post_aside } md="auto" >
+            <Row style={ styles.post_box }>
+                <Col style={ styles.aside_background } md="auto" >
                     <div>
                         <p>{ props.post.ups }</p>
                     </div>
                 </Col>
-                <Col>
+                <Col style={ styles.article_background }>
                     <div>
-                        <p style={{ ...styles.post_info, ...styles.subreddit_name }} >{ props.post.subreddit }</p>
-                        <p style={{ ...styles.post_info, ...styles.additional_info }} >{ props.post.author }</p>
-                        <p style={{ ...styles.post_info, ...styles.additional_info }} >{ props.post.created }</p>
+                        <p style={{ ...styles.article_info, ...styles.subreddit_name }} >{ props.post.subreddit }</p>
+                        <p style={{ ...styles.article_info, ...styles.additional_article_info }} >{ props.post.author }</p>
+                        <p style={{ ...styles.article_info, ...styles.additional_article_info }} >{ props.post.created }</p>
                     </div>
-                    <h1 style={ styles.post_title }>{ props.post.title }</h1>
+                    <h1 style={ styles.article_title }>{ props.post.title }</h1>
                     <div>
                         { (props.post.type === 'html') ? 
                         <HtmlPost post={ props.post as html_post_t } /> :
