@@ -19,7 +19,7 @@ function useScrapData() {
         .catch((err) => { console.log("error, ", err); return { foo: 'bar' } });
     }
 
-    return { data: data };
+    return { data };
 }
 
 export default useScrapData;
