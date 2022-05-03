@@ -27,8 +27,8 @@ function Post(props: { post: post_t }) {
                 </Col>
                 <Col style={ styles.article_background }>
                     <div>
-                        <p style={{ ...styles.article_info, ...styles.subreddit_name }} >{ props.post.subreddit }</p>
-                        <p style={{ ...styles.article_info, ...styles.additional_article_info }} >{ props.post.author }</p>
+                        <p style={{ ...styles.article_info, ...styles.subreddit_name }} >{ `r/${props.post.subreddit}` }</p>
+                        <p style={{ ...styles.article_info, ...styles.additional_article_info }} >{ `u/${props.post.author}` }</p>
                         <p style={{ ...styles.article_info, ...styles.additional_article_info }} >{ props.post.created }</p>
                     </div>
                     <h1 style={ styles.article_title }>{ props.post.title }</h1>

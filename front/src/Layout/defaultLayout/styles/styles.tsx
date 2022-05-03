@@ -6,6 +6,7 @@ const styles = {
         width: '100%',
         paddingLeft: 30,
         top: 0,
+        zIndex: 1000
     },
     main: {
         marginLeft: 'auto',

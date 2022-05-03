@@ -20,8 +20,8 @@ function MediaPost(props: { post: media_post_t }) {
                     <MediaImage image={ props.post.media[0] } /> :
                     (<Carousel>
                         {
-                            props.post.media.map((media) =>
-                                <Carousel.Item>
+                            props.post.media.map((media, ind) =>
+                                <Carousel.Item key={ind}>
                                     <MediaImage image={ media } />
                                 </Carousel.Item>
                             )
