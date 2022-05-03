@@ -1,7 +1,10 @@
 import { Container, Row } from 'react-bootstrap';
+
 import Post from '~/components/Post';
-import { html_post_t, media_post_t } from '~/services/post_t';
+
 import useHome from './hooks/useHome';
+
+import { html_post_t, media_post_t } from '~/services/post_t';
 
 import styles from './styles/styles';
 
