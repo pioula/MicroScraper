@@ -5,21 +5,30 @@ import { Col, Container, Row } from 'react-bootstrap';
 import HtmlPost from './components/HtmlPost';
 import MediaPost from './components/MediaPost';
 
-import usePost from './hooks/usePost';
+import usePost from '~/hooks/usePost';
 
 import { html_post_t } from '~/services/post_t';
 
 import styles from './styles/styles';
+import { useContext, useEffect } from 'react';
+import UserContext from '~/contexts/userContext';
 
 
 function Post(props: { post: post_t }) {
-    const { convertUps } = usePost();
+    const { containsPost, convertUps } = usePost();
+
+    const userContext = useContext(UserContext);
 
     return (
         <Container>
             <Row style={ styles.post_box }>
                 <Col style={ styles.aside } xs={1}>
                     <div>
+                        {
+                            (userContext.auth.currentUser && !containsPost(userContext.usersPosts, props.post)) ? 
+                            <p style={{ ...styles.aside_element, fontSize: 35 }}>+</p> :
+                            <div />  
+                        }
                         <p style={{ ...styles.aside_element, fontSize: 35 }}>⇧</p>
                         <p style={ styles.aside_element }>{ convertUps(props.post.ups) }</p>
                         <p style={{ ...styles.aside_element, fontSize: 35 }}>⇩</p>

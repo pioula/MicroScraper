@@ -3,6 +3,7 @@ import React from "react";
 import { initializeApp } from 'firebase/app';
 
 import { getAuth, GoogleAuthProvider,  signInWithPopup } from "firebase/auth";
+import post_t from "~/services/post_t";
 
 
 const firebaseConfig = {
@@ -15,7 +16,7 @@ const firebaseConfig = {
   appId: "1:11819179651:web:fab1e5a15c6ac72646c5b6"
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
@@ -29,12 +30,14 @@ function signInUser() {
         });
 }
 
-export let authContextContent = {
+export let userContextContent = {
     auth,
     provider,
-    signInUser
+    signInUser,
+    usersPosts: [] as Array<post_t>,
+    setPosts: (v: Array<post_t>) => {} 
 }
 
-const AuthContext = React.createContext(authContextContent);
+const UserContext = React.createContext(userContextContent);
 
-export default AuthContext;
+export default UserContext;
