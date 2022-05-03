@@ -18,7 +18,6 @@ class FirebaseHandler {
     }
 
     async updateUsersPosts(user, posts) {
-        console.log(user, posts);
         await set(ref(this.database, `users/${user}`), posts);
     }
 

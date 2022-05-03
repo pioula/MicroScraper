@@ -1,18 +1,6 @@
 import { Link } from "react-router-dom";
-import { html_post_t } from "~/services/post_t";
 import useHeader from "./hooks/useHeader";
 import styles from "./styles/styles";
-
-const foo_post: html_post_t = {
-    type: 'html',
-    html: '',
-    author: '',
-    title: '',
-    subreddit: '',
-    ups: 0,
-    permalink: '',
-    created: ''
-}
 
 function Header() {
     const { user, onSignIn } = useHeader();

@@ -6,7 +6,7 @@ function MediaImage(props: { image: string }) {
     return (
         <img
             src= { props.image }
-            alt="Media Image"
+            alt="Media"
             style={{maxWidth: '100%'}}
         />
     );

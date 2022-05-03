@@ -9,7 +9,7 @@ function useUserPosts() {
                 'Content-Type': 'application/json'
             },
         }).then((response) => response.json())
-        .catch((err) => { console.log("error, ", err); return { foo: 'bar' } });
+        .catch((err) => { console.log("error, ", err); return []; });
     }
 
     function udpateUserPosts(userId: string, posts: Array<post_t>) {

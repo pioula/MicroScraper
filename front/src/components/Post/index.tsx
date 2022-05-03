@@ -1,23 +1,23 @@
-import post_t, { media_post_t } from '~/services/post_t';
-
 import { Col, Container, Row } from 'react-bootstrap';
 
 import HtmlPost from './components/HtmlPost';
 import MediaPost from './components/MediaPost';
 
-import usePost from '~/hooks/usePost';
+import usePost from '~/components/Post/hooks/usePost';
 
-import { html_post_t } from '~/services/post_t';
+import post_t from '~/services/post_t';
+
+import { html_post_t, media_post_t } from '~/services/post_t';
 
 import styles from './styles/styles';
-import { useContext, useEffect } from 'react';
-import UserContext from '~/contexts/userContext';
-
 
 function Post(props: { post: post_t }) {
-    const { containsPost, convertUps } = usePost();
-
-    const userContext = useContext(UserContext);
+    const { containsPost,
+        convertUps, 
+        handleAdd, 
+        handleRemove, 
+        currentUser, 
+        usersPosts } = usePost();
 
     return (
         <Container>
@@ -25,9 +25,12 @@ function Post(props: { post: post_t }) {
                 <Col style={ styles.aside } xs={1}>
                     <div>
                         {
-                            (userContext.auth.currentUser && !containsPost(userContext.usersPosts, props.post)) ? 
-                            <p style={{ ...styles.aside_element, fontSize: 35 }}>+</p> :
-                            <div />  
+                            (currentUser) ? (
+                                (containsPost(usersPosts, props.post)) ?
+                                <p style={{ ...styles.aside_element, fontSize: 35 }} onClick={() => handleRemove(props.post) }>-</p> : 
+                                <p style={{ ...styles.aside_element, fontSize: 35 }} onClick={() => handleAdd(props.post) }>+</p>
+                            ) :
+                            <div />
                         }
                         <p style={{ ...styles.aside_element, fontSize: 35 }}>⇧</p>
                         <p style={ styles.aside_element }>{ convertUps(props.post.ups) }</p>
