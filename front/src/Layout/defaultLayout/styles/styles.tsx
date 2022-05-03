@@ -1,7 +1,8 @@
 const styles = {
     header: {
         position: 'fixed' as 'fixed',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#696969',
+        color: '#FFFFFF',
         width: '100%',
         paddingLeft: 30,
         top: 0,
@@ -11,11 +12,6 @@ const styles = {
         marginRight: 'auto',
         width: '75%',
         paddingTop: 75,
-    },
-    background: {
-        height: '100vh',
-        width: '100vw',
-        backgroundColor: '#DDDDDD',
     }
 }
 
