@@ -78,28 +78,13 @@ def get_images(post):
             if 'variants' in image.keys() and image['variants']:
                 variants_of_image = image['variants']
                 variants = list(variants_of_image.keys())
-                result.append(variants_of_image[variants[0]]['source'])
+                result.append(variants_of_image[variants[0]]['source']['url'])
             else:
-                result.append(image['source'])
+                result.append(image['source']['url'])
         return result
     except AttributeError as e:
         print(e)
-    #    pprint.pprint(vars(post), sys.stderr)
         return None
-
-
-"""  #  Deprecated
-def get_media(post):
-    if not hasattr(post, 'preview') or not post.preview:
-        return None
-
-    if 'reddit_video_preview' not in post.preview:
-        return get_images(post)
-
-    return [dict({'mp4': post.preview['reddit_video_preview']['fallback_url'],
-                  'height': post.preview['reddit_video_preview']['height'],
-                  'width': post.preview['reddit_video_preview']['width']})]
-"""
 
 
 def get_multi_image(post):
@@ -143,16 +128,12 @@ def get_new_posts():
                 post_dict['type'] = 'misc'
 
         if 'type' not in post_dict:
-    #        pprint.pprint(vars(post))
             sys.stderr.write("Unknown post type!\n")
             continue
             # Should never happen.
         data_dict[counter] = post_dict
         counter += 1
-    #    if counter % 50 == 0:
-    #        print('Downloaded ' + str(counter) + " posts so far!\n")
 
-    # print(data_dict)
     print("posts parsed")
     # pprint.pprint(data_dict)
     return data_dict
