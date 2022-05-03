@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { child, get, getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBzOjc_6XZSON_c74OVBJH_tdjngJQdUQs",
-    authDomain: "scraperapi-aa384.firebaseapp.com",
-    databaseURL: "https://scraperapi-aa384-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "scraperapi-aa384",
-    storageBucket: "scraperapi-aa384.appspot.com",
-    messagingSenderId: "238476094813",
-    appId: "1:238476094813:web:bcd516f5aeca77110a8cb4"
+  apiKey: "AIzaSyBYjEyzfZnEXlQzPyQo-kw_AaY4C0hO9rA",
+  authDomain: "scraperapi-41f23.firebaseapp.com",
+  databaseURL: "https://scraperapi-41f23-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "scraperapi-41f23",
+  storageBucket: "scraperapi-41f23.appspot.com",
+  messagingSenderId: "131094411113",
+  appId: "1:131094411113:web:6a8a8b1f6b8ff776d5eff8"
 };
 
 class FirebaseHandler {
