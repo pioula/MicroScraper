@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Layout from '~/Layout/defaultLayout';
-
+import Layout from '../defaultLayout';
 import Home from '~/pages/Home';
 
 function App() {

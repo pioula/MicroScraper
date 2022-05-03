@@ -6,6 +6,7 @@ const Layout = (props: { children: any }) => {
         <>
             <header style={ styles.header }>
                 <h1>MicroScraper</h1>
+                
             </header>
             <main style={ styles.main }>{ props.children }</main>
         </>
