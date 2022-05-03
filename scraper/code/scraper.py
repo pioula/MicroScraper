@@ -102,8 +102,11 @@ def get_multi_image(post):
     return images
 
 
+source_subreddits = ['MachineLearning', 'MachineLearningMemes', "DataIsBeautiful"]
+
+
 def get_new_posts():
-    top_posts = reddit.subreddit('MachineLearning+Cars+dataisbeautiful').new(limit=10)
+    top_posts = reddit.subreddit('+'.join(source_subreddits)).new(limit=10)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
