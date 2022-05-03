@@ -68,6 +68,8 @@ def get_post_param(post, parameter):
 
 def get_images(post):
     try:
+        if not hasattr(post, 'preview') or not post.preview:
+            return None
         result = []
         images = post.preview['images']
         for image in images:
@@ -76,9 +78,9 @@ def get_images(post):
             if 'variants' in image.keys() and image['variants']:
                 variants_of_image = image['variants']
                 variants = list(variants_of_image.keys())
-                result.append({variants[0]: variants_of_image[variants[0]]['source']})
+                result.append({'src': variants_of_image[variants[0]]['source']})
             else:
-                result.append({'image': image['source']})
+                result.append({'src': image['source']})
         return result
     except AttributeError as e:
         print(e)
@@ -86,6 +88,7 @@ def get_images(post):
         return None
 
 
+"""  #  Deprecated
 def get_media(post):
     if not hasattr(post, 'preview') or not post.preview:
         return None
@@ -96,6 +99,7 @@ def get_media(post):
     return [dict({'mp4': post.preview['reddit_video_preview']['fallback_url'],
                   'height': post.preview['reddit_video_preview']['height'],
                   'width': post.preview['reddit_video_preview']['width']})]
+"""
 
 
 def get_multi_image(post):
@@ -109,14 +113,12 @@ def get_multi_image(post):
         for img in resolutions:
             if result['x'] < img['x']:
                 result = img
-        images.append(dict({'image': result['u'],
-                            'height': result['y'],
-                            'width': result['x']}))
+        images.append(dict({'src': result['u']}))
     return images
 
 
 def get_new_posts():
-    top_posts = reddit.subreddit('MachineLearning+Cars+dataisbeautiful').new(limit=1000)
+    top_posts = reddit.subreddit('MachineLearning+Cars+dataisbeautiful').new(limit=10)
     print("Posts fetched")
     data_dict = dict()
     counter = 0
@@ -128,7 +130,7 @@ def get_new_posts():
             post_dict[param] = get_post_param(post, param)
 
         if post.selftext_html is None:
-            post_dict['media'] = get_media(post)
+            post_dict['media'] = get_images(post)
             post_dict['type'] = 'media'
         else:
             post_dict['type'] = 'html'
