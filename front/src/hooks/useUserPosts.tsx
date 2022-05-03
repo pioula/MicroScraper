@@ -2,7 +2,7 @@ import post_t from "~/services/post_t";
 
 function useUserPosts() {
     function getUserPosts(userId: string) {
-        return fetch(`http://localhost:80/user?user=${userId}`, {
+        return fetch(`http://34.107.209.5/user?user=${userId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -13,7 +13,7 @@ function useUserPosts() {
     }
 
     function udpateUserPosts(userId: string, posts: Array<post_t>) {
-        return fetch(`http://localhost:80/user?user=${userId}`, {
+        return fetch(`http://34.107.209.5/user?user=${userId}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
