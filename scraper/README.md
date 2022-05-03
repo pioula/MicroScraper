@@ -12,16 +12,7 @@
 ### type = 'html'
 - html - html text
 ### type = 'media'
-- media - Either a link to a video or array of media contents:
-Each array element is of the following form:
-- 'type' : 'url'
-Where type could be, but is not limited to:
-- 'image', 'gif', 'mp4' etc.
-### type = 'media_gallery'
-- media_gallery : array of gallery_images
-Gallery image contains following information:
-- 'x' : number, 'y' : number - resolution
-- 'src' : href to the source image
+- media - array of media source links
 ### type = 'misc'
 Various other, less popular, types of posts, such as post of the following form:
 'Title'

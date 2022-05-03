@@ -78,9 +78,9 @@ def get_images(post):
             if 'variants' in image.keys() and image['variants']:
                 variants_of_image = image['variants']
                 variants = list(variants_of_image.keys())
-                result.append({'src': variants_of_image[variants[0]]['source']})
+                result.append(variants_of_image[variants[0]]['source'])
             else:
-                result.append({'src': image['source']})
+                result.append(image['source'])
         return result
     except AttributeError as e:
         print(e)
@@ -113,7 +113,7 @@ def get_multi_image(post):
         for img in resolutions:
             if result['x'] < img['x']:
                 result = img
-        images.append(dict({'src': result['u']}))
+        images.append(result['u'])
     return images
 
 
