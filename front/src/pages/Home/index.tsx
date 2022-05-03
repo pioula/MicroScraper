@@ -27,7 +27,7 @@ const foo_html: html_post_t = {
     author: 'Piotr Ulanowski',
     title: 'Foo bar foo bar foo',
     subreddit: 'r/subFooBar',
-    ups: 34,
+    ups: 1234567,
     permalink: 'foo.com',
     created: '02.05.2022'
 }
@@ -40,7 +40,7 @@ const foo_media: media_post_t = {
     author: 'Marcin Mordecki',
     title: 'Kubernetes',
     subreddit: 'r/K8s',
-    ups: 123,
+    ups: 123456,
     permalink: 'bar.com',
     created: '03.05.2022'
 }
@@ -52,7 +52,7 @@ const bar_media: media_post_t = {
     author: 'Marcin Mordecki',
     title: 'Kubernetes',
     subreddit: 'r/K8s',
-    ups: 123,
+    ups: 99912,
     permalink: 'bar.com',
     created: '03.05.2022'
 }
