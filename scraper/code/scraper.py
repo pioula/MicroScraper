@@ -110,6 +110,7 @@ def get_new_posts():
     print("Posts fetched")
     data_dict = dict()
     counter = 0
+    skipped = 0
 
     for post in top_posts:
         post_dict = dict()
@@ -127,8 +128,8 @@ def get_new_posts():
                 post_dict['media'] = get_multi_image(post)
                 post_dict['type'] = 'media'
             else:
-                post_dict['misc'] = post.url
-                post_dict['type'] = 'misc'
+                skipped += 1
+                continue
 
         if 'type' not in post_dict:
             sys.stderr.write("Unknown post type!\n")
@@ -137,7 +138,7 @@ def get_new_posts():
         data_dict[counter] = post_dict
         counter += 1
 
-    print("posts parsed")
+    print("posts parsed, skipped " + str(skipped))
     # pprint.pprint(data_dict)
     return data_dict
 
